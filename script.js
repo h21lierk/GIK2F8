@@ -1,31 +1,25 @@
 'use strict';
 
-const bookList = [
-  {
-    id: 1,
-    author: 'Charles Dickens',
-    title: 'Oliver Twist'
-  },
-  {
-    id: 2,
-    author: 'William Shakespear',
-    title: 'Hamlet'
-  }
-];
+let bookList = [];
 
-/* searchField.addEventListener('keyup', (e) => searchBooks(e.target.value)); */
-searchField.addEventListener('keyup', (e) => 
+window.addEventListener('load', () => {
+  getAll().then((apiBooks) => (bookList = apiBooks));
+});
+
+searchField.addEventListener('keyup', (e) => searchBooks(e.target.value));
+
+  /* searchField.addEventListener('keyup', (e) => 
   renderBookList(
     bookList.filter(({ title, author }) => {
       const searchTerm = e.target.value.toLowerCase();
       return title.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0 || author.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
       })
   )
-);
+); */
 
 
 
-/* function searchBooks(searchTerm) {
+function searchBooks(searchTerm) {
   renderBookList(
     bookList.filter(
       ({ title, author }) => 
@@ -33,7 +27,7 @@ searchField.addEventListener('keyup', (e) =>
         author.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
     )
   );
-} */
+}
 
 
 
@@ -47,9 +41,10 @@ function renderBookList(bookList) {
   if (existingElement) {
     root.removeChild(existingElement);
   }
-  if (bookList.length > 0) {
+  if (bookList.length > 0 && searchField.value) {
     root.insertAdjacentHTML('beforeend', BookList(bookList));
   }
 }
 
 
+getAll().then((bookList) => console.log(bookList));
